@@ -3,23 +3,21 @@ package com.shadev.net;
 import java.io.IOException;
 
 /**
- * Created by halftome on 2014.11.21..
+ * Created by Benjamin on 2014.11.21..
  */
-public class Server extends Net{
+public class ServerConnectionManager implements Runnable{
+    private Connection c;
     private int port;
 
-    public Server(int port){
+    public ServerConnectionManager(Connection c, int port){
+        this.c = c;
         this.port = port;
-    }
-
-    public Server(){
-        this.port = 9000;
     }
 
     @Override
     public void run() {
         try {
-            listen(this.port);
+            c.listen(this.port);
         } catch (IOException e) {
             e.printStackTrace();
         }
