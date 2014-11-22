@@ -1,5 +1,6 @@
 package com.shadev.gui;
 
+import com.shadev.chat.ChatEventHandler;
 import com.shadev.net.Connection;
 
 import javax.swing.*;
@@ -25,9 +26,12 @@ public class MainWindow {
     private JTextArea typebox;
     private JButton send;
     private JLabel msgLabel;
+    private ChatEventHandler chatEventHandler;
 
-    public MainWindow(Connection c){
-        this.connection = c;
+    public MainWindow(ChatEventHandler chatEventHandler){
+
+        this.chatEventHandler = chatEventHandler;
+        chatEventHandler.registerGui(this);
         mainFrame = new JFrame("JMessenger");
         mainPanel = new JPanel(new BorderLayout());
 
@@ -78,6 +82,10 @@ public class MainWindow {
             }
         });
         mainFrame.add(mainPanel);
+    }
+
+    public void init(Connection c){
+        this.connection = c;
         mainFrame.setVisible(true);
     }
 
@@ -93,5 +101,17 @@ public class MainWindow {
         chatHistory.add(jp);
         this.connection.out.println(s);
         typebox.setText("");
+        chatHistory.updateUI();
+    }
+
+    public void getMessage(String s){
+        JPanel jp = (new JPanel( new BorderLayout() ));
+        JTextField tf = new JTextField(s);
+        tf.setBorder(null);
+        tf.setEditable(false);
+        tf.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+        jp.add(tf, BorderLayout.WEST);
+        chatHistory.add(jp);
+        chatHistory.updateUI();
     }
 }

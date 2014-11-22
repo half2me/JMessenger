@@ -1,5 +1,7 @@
 package com.shadev.net;
 
+import com.shadev.chat.ChatEventHandler;
+
 import java.io.IOException;
 
 /**
@@ -8,10 +10,12 @@ import java.io.IOException;
 public class ServerConnectionManager implements Runnable{
     private Connection c;
     private int port;
+    private ChatEventHandler chatEventHandler;
 
-    public ServerConnectionManager(Connection c, int port){
+    public ServerConnectionManager(Connection c, int port, ChatEventHandler chatEventHandler){
         this.c = c;
         this.port = port;
+        this.chatEventHandler = chatEventHandler;
     }
 
     @Override

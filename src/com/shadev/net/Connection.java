@@ -1,5 +1,7 @@
 package com.shadev.net;
 
+import com.shadev.chat.ChatEventHandler;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -11,10 +13,16 @@ import java.util.Scanner;
  * Created by halftome on 2014.11.21..
  */
 public class Connection {
-    private ServerSocket serverSocket;
+    public ServerSocket serverSocket;
     public Socket socket;
     public PrintWriter out;
     public Scanner in;
+    private ChatEventHandler chatEventHandler;
+
+    public Connection(ChatEventHandler chatEventHandler){
+        this.chatEventHandler = chatEventHandler;
+        chatEventHandler.registerConnection(this);
+    }
 
     private void init() throws IOException {
         in = new Scanner(socket.getInputStream());
@@ -25,6 +33,7 @@ public class Connection {
         System.out.println("Connecting to: " + hostname + ":" + port);
         socket = new Socket(hostname, port);
         init();
+        chatEventHandler.eventConnectionSuccess(this);
     }
 
     public void listen(int port) throws IOException {
@@ -33,6 +42,7 @@ public class Connection {
         this.socket = serverSocket.accept();
         System.out.println("Client connected: " + socket.getRemoteSocketAddress());
         init();
+        chatEventHandler.eventConnectionSuccess(this);
     }
 
     public void close() throws IOException {
