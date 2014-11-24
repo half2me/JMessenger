@@ -13,13 +13,13 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-
         // Set params
         int port = 9000;
-        if(args[1] != null){
+        try{
             port = Integer.parseInt(args[1]);
+        } catch
+                (java.lang.ArrayIndexOutOfBoundsException e){
         }
-
 
         // Event Handler
         ChatEventHandler hand = new ChatEventHandler();
@@ -35,14 +35,5 @@ public class Main {
         // GUI
         ConnectionWindow cw = new ConnectionWindow(server, client, hand);
         MainWindow mainWindow = new MainWindow(hand);
-
-        /*
-        // Register Watchers
-
-        Thread clientWatcher = new Thread(new Watcher(client, hand));
-        clientWatcher.start();
-        */
-
-
     }
 }

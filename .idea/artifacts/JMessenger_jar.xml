@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JMessenger:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JMessenger_jar</output-path>
+    <root id="archive" name="JMessenger.jar">
+      <element id="module-output" name="JMessenger" />
+    </root>
+  </artifact>
+</component>
