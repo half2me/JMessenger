@@ -4,10 +4,8 @@ import com.shadev.chat.ChatEventHandler;
 import com.shadev.net.Connection;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 
 /**
@@ -29,7 +27,6 @@ public class MainWindow {
     private ChatEventHandler chatEventHandler;
 
     public MainWindow(ChatEventHandler chatEventHandler){
-
         this.chatEventHandler = chatEventHandler;
         chatEventHandler.registerGui(this);
         mainFrame = new JFrame("JMessenger");

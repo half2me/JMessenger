@@ -7,6 +7,7 @@ import com.shadev.net.Connection;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Benjamin on 2014.11.21..
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class ChatEventHandler {
     private ConnectionWindow connectionWindow;
     private MainWindow mainWindow;
-    private ArrayList<Connection> connections;
+    private Collection<Connection> connections;
     private boolean isConnected;
 
     public ChatEventHandler(){

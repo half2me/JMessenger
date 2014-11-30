@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Benjamin on 2014.11.21..
@@ -24,14 +26,19 @@ public class ConnectionWindow {
     private JLabel ipLabel;
     private JLabel portLabel;
 
-    private JTextField ip;
+    private JComboBox ip;
     private JTextField port;
 
     private JButton connectButton;
 
     private JLabel status;
 
+    private DefaultComboBoxModel<String> recentHostnames;
+
     public ConnectionWindow(final Connection server, final Connection client, final ChatEventHandler hand){
+        this.recentHostnames = new DefaultComboBoxModel<String>();
+        loadRecentHostnames();
+
         hand.registerConnectionGui(this);
         mainFrame = new JFrame("JMessenger - Connect");
         mainPanel = new JPanel(new FlowLayout());
@@ -41,7 +48,8 @@ public class ConnectionWindow {
         connectLabel = new JLabel("Connect to Server: ");
         ipLabel = new JLabel("IP: ");
         portLabel = new JLabel("Port: ");
-        ip = new JTextField(12);
+        ip = new JComboBox(recentHostnames);
+        ip.setEditable(true);
         port = new JTextField(5);
         connectButton = new JButton("Connect");
         status = new JLabel("");
@@ -51,7 +59,8 @@ public class ConnectionWindow {
             public void actionPerformed(ActionEvent e) {
                 status.setText("Connecting...");
                 connectButton.setEnabled(false);
-                hand.connect(ip.getText(), port.getText(), client);
+                recentHostnames.addElement(ip.getSelectedItem().toString());
+                hand.connect(ip.getSelectedItem().toString(), port.getText(), client);
             }
         });
 
@@ -83,6 +92,7 @@ public class ConnectionWindow {
 
     public void close(){
         mainFrame.setVisible(false);
+        saveRecentHostnames();
     }
 
     public void open(){
@@ -92,5 +102,35 @@ public class ConnectionWindow {
     public void open(String s){
         mainFrame.setVisible(true);
         status.setText("Disconnected...");
+    }
+
+    private void loadRecentHostnames(){
+        FileInputStream f = null;
+        try {
+            f = new FileInputStream("recent.dat");
+            ObjectInputStream in = new ObjectInputStream(f);
+            recentHostnames = (DefaultComboBoxModel<String>) in.readObject();
+            in.close();
+            f.close();
+            System.out.println("Deserialized data...");
+        } catch (IOException e) {
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveRecentHostnames(){
+        try
+        {
+            FileOutputStream f = new FileOutputStream("recent.dat");
+            ObjectOutputStream out = new ObjectOutputStream(f);
+            out.writeObject(recentHostnames);
+            out.close();
+            f.close();
+            System.out.println("Serialized data...");
+        }catch(IOException i)
+        {
+            i.printStackTrace();
+        }
     }
 }

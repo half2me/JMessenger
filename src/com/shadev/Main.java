@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // Set params
-        int port = 9000;
+        int port = 9002;
         try{
             port = Integer.parseInt(args[1]);
         } catch
