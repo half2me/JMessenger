@@ -36,6 +36,7 @@ public class MainWindow {
         mainPanel = new JPanel(new BorderLayout());
 
         chatHistory = new JTextArea();
+        chatHistory.setEditable(false);
         chatHistoryPane = new JScrollPane(chatHistory);
 
         typePanel = new JPanel(new BorderLayout());
