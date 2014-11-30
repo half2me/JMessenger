@@ -22,10 +22,13 @@ public class ClientConnectionManager implements Runnable{
 
     @Override
     public void run() {
+        System.out.println("CCM Thread running");
         try {
             c.connect(this.hostname, this.port);
         } catch (IOException e) {
             chatEventHandler.eventConnectionFailed();
+            System.out.println("CCM Thread terminated! (Exception)");
         }
+        System.out.println("CCM Thread terminated!");
     }
 }

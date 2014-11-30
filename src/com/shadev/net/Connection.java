@@ -45,12 +45,22 @@ public class Connection {
         chatEventHandler.eventConnectionSuccess(this);
     }
 
+    public void sendMessage(String s){
+        out.println(s);
+        System.out.println("SENT: " + s);
+    }
+
     public void close() throws IOException {
-        if(serverSocket != null){
-            serverSocket.close();
-        }
         if(socket != null){
+            System.out.println("Closing " + getRole() + "Socket");
             socket.close();
         }
+    }
+
+    public String getRole(){
+        if(serverSocket != null){
+            return "Server";
+        }
+        else return "Client";
     }
 }

@@ -20,10 +20,13 @@ public class ServerConnectionManager implements Runnable{
 
     @Override
     public void run() {
+        System.out.println("SCM running");
         try {
             c.listen(this.port);
         } catch (IOException e) {
+            System.out.println("SCM terminated! (Exception)");
             e.printStackTrace();
         }
+        System.out.println("SCM terminated!");
     }
 }

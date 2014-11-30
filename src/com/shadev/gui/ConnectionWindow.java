@@ -101,7 +101,8 @@ public class ConnectionWindow {
 
     public void open(String s){
         mainFrame.setVisible(true);
-        status.setText("Disconnected...");
+        status.setText(s);
+        this.connectButton.setEnabled(true);
     }
 
     private void loadRecentHostnames(){

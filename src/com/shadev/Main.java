@@ -14,11 +14,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // Set params
-        int port = 9002;
+        int port = 9000;
         try{
             port = Integer.parseInt(args[1]);
         } catch
-                (java.lang.ArrayIndexOutOfBoundsException e){
+                (Exception e){
         }
 
         // Event Handler

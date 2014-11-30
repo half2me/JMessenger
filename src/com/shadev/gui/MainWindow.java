@@ -18,7 +18,7 @@ public class MainWindow {
     private JPanel mainPanel;
 
     private JScrollPane chatHistoryPane;
-    private JPanel chatHistory;
+    private JTextArea chatHistory;
 
     private JPanel typePanel;
     private JTextArea typebox;
@@ -32,9 +32,7 @@ public class MainWindow {
         mainFrame = new JFrame("JMessenger");
         mainPanel = new JPanel(new BorderLayout());
 
-        chatHistory = new JPanel();
-        chatHistory.setLayout(new BoxLayout(chatHistory, BoxLayout.Y_AXIS));
-        chatHistory.setAlignmentY(0f);
+        chatHistory = new JTextArea();
         chatHistoryPane = new JScrollPane(chatHistory);
 
         typePanel = new JPanel(new BorderLayout());
@@ -83,32 +81,24 @@ public class MainWindow {
 
     public void init(Connection c){
         this.connection = c;
+        mainFrame.setTitle("JMessenger - " + c.getRole());
         mainFrame.setVisible(true);
     }
 
     public void sendMessage(String s){
-        typebox.setText("");
-        JPanel jp = (new JPanel( new BorderLayout() ));
-        JTextField tf = new JTextField(s);
-        tf.setBorder(null);
-        tf.setEditable(false);
-        tf.setCursor(new Cursor(Cursor.TEXT_CURSOR));
-        jp.add(tf, BorderLayout.EAST);
-        jp.setAlignmentY(Component.TOP_ALIGNMENT);
-        chatHistory.add(jp);
-        this.connection.out.println(s);
+        chatHistory.append("[Me]: " + s + '\n');
+        this.connection.sendMessage(s);
         typebox.setText("");
         chatHistory.updateUI();
     }
 
     public void getMessage(String s){
-        JPanel jp = (new JPanel( new BorderLayout() ));
-        JTextField tf = new JTextField(s);
-        tf.setBorder(null);
-        tf.setEditable(false);
-        tf.setCursor(new Cursor(Cursor.TEXT_CURSOR));
-        jp.add(tf, BorderLayout.WEST);
-        chatHistory.add(jp);
+        chatHistory.append("[You]: " + s + '\n');
         chatHistory.updateUI();
+    }
+
+    public void close(){
+        mainFrame.setVisible(false);
+        chatHistory.removeAll();
     }
 }

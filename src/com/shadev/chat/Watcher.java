@@ -17,12 +17,16 @@ public class Watcher implements Runnable{
 
     @Override
     public void run() {
-        if(c.in == null) System.out.println("c is null");
+        System.out.println("Watcher Thread Started...");
         while(true){
             if(c.in.hasNext()){
                 String s = c.in.nextLine();
-                System.out.println(s);
                 e.msgReceived(s);
+            }
+            if(c.out.checkError()){
+                e.eventDisconnected(c);
+                System.out.println("Watcher Thread Terminated...");
+                return;
             }
         }
     }
