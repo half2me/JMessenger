@@ -5,7 +5,7 @@ import com.shadev.chat.ChatEventHandler;
 import java.io.IOException;
 
 /**
- * Created by Benjamin on 2014.11.21..
+ * This takes care of the client's connection in a Runnable way
  */
 public class ClientConnectionManager implements Runnable{
     private Connection c;
@@ -13,6 +13,12 @@ public class ClientConnectionManager implements Runnable{
     private int port;
     private ChatEventHandler chatEventHandler;
 
+    /**
+     * @param c The client's connection object
+     * @param hostname hostname of the server to connect to
+     * @param port port number of the server
+     * @param chatEventHandler the event handler to use
+     */
     public ClientConnectionManager(Connection c, String hostname, int port, ChatEventHandler chatEventHandler){
         this.c = c;
         this.hostname = hostname;
@@ -20,6 +26,9 @@ public class ClientConnectionManager implements Runnable{
         this.chatEventHandler = chatEventHandler;
     }
 
+    /**
+     * The runnable method
+     */
     @Override
     public void run() {
         System.out.println("CCM Thread running");

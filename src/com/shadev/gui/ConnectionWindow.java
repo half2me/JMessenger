@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by Benjamin on 2014.11.21..
+ * The GUI for the Connection Windows
  */
 public class ConnectionWindow {
     private JFrame mainFrame;
@@ -35,6 +35,11 @@ public class ConnectionWindow {
 
     private DefaultComboBoxModel<String> recentHostnames;
 
+    /**
+     * @param server The server's connection object
+     * @param client The client's connection object
+     * @param hand The event handler
+     */
     public ConnectionWindow(final Connection server, final Connection client, final ChatEventHandler hand){
         this.recentHostnames = new DefaultComboBoxModel<String>();
         loadRecentHostnames();
@@ -85,30 +90,45 @@ public class ConnectionWindow {
         mainFrame.setVisible(true);
     }
 
+    /**
+     * Notify the user of a failed connection attempt
+     */
     public void eventConnectionFailed(){
         this.status.setText("Failed to Connect!");
         this.connectButton.setEnabled(true);
     }
 
+    /**
+     * Closes the GUI and saves the Recent hostname list
+     */
     public void close(){
         mainFrame.setVisible(false);
         saveRecentHostnames();
     }
 
+    /**
+     * Opens the GUI
+     */
     public void open(){
         mainFrame.setVisible(true);
     }
 
+    /**
+     * Opens the GUI
+     * @param s The status message to show to the user
+     */
     public void open(String s){
         mainFrame.setVisible(true);
         status.setText(s);
         this.connectButton.setEnabled(true);
     }
 
+    /**
+     * Loads the recently used hostnames from recent.dat
+     */
     private void loadRecentHostnames(){
-        FileInputStream f = null;
         try {
-            f = new FileInputStream("recent.dat");
+            FileInputStream f = new FileInputStream("recent.dat");
             ObjectInputStream in = new ObjectInputStream(f);
             recentHostnames = (DefaultComboBoxModel<String>) in.readObject();
             in.close();
@@ -120,6 +140,9 @@ public class ConnectionWindow {
         }
     }
 
+    /**
+     * Saves the recently used hostnames to recent.dat
+     */
     private void saveRecentHostnames(){
         try
         {

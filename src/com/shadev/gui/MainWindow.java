@@ -9,7 +9,7 @@ import java.awt.event.*;
 
 
 /**
- * Created by Benjamin on 2014.11.20..
+ * The main GUI for the chat interface
  */
 public class MainWindow {
 
@@ -26,6 +26,9 @@ public class MainWindow {
     private JLabel msgLabel;
     private ChatEventHandler chatEventHandler;
 
+    /**
+     * @param chatEventHandler The event handler to use
+     */
     public MainWindow(ChatEventHandler chatEventHandler){
         this.chatEventHandler = chatEventHandler;
         chatEventHandler.registerGui(this);
@@ -79,25 +82,46 @@ public class MainWindow {
         mainFrame.add(mainPanel);
     }
 
+    /**
+     * Initialize the window
+     * @param c Connection object to use
+     */
     public void init(Connection c){
         this.connection = c;
         mainFrame.setTitle("JMessenger - " + c.getRole());
         mainFrame.setVisible(true);
     }
 
+    /**
+     * Sends a message
+     * @param s The string to send
+     */
     public void sendMessage(String s){
         chatHistory.append("[Me]: " + s + '\n');
         this.connection.sendMessage(s);
         typebox.setText("");
         chatHistory.updateUI();
+        JScrollBar vertical = chatHistoryPane.getVerticalScrollBar();
+        vertical.setValue(vertical.getMaximum());
     }
 
+    /**
+     * Loads a message that has been received into the chatHistory
+     * and displays it on screen
+     * @param s The message
+     */
     public void getMessage(String s){
-        chatHistory.append("[You]: " + s + '\n');
+        chatHistory.append("[Partner]: " + s + '\n');
         chatHistory.updateUI();
+        JScrollBar vertical = chatHistoryPane.getVerticalScrollBar();
+        vertical.setValue(vertical.getMaximum());
     }
 
-    public void close(){
+    /**
+     * Closes the GUI
+     * and clears the chat history
+     */
+    public void close() {
         mainFrame.setVisible(false);
         chatHistory.removeAll();
     }
