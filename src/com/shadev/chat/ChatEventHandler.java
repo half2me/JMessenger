@@ -26,6 +26,10 @@ public class ChatEventHandler {
         this.isConnected = false;
     }
 
+    public int getNumOfConnections(){
+        return connections.size();
+    }
+
     /**
      * This method should be called by the GUI to register itself
      * in the EH. This method is for the Main Window GUI
@@ -61,11 +65,13 @@ public class ChatEventHandler {
      * to register itself in the EH.
      * @param connection The connection object to register
      */
-    public void registerConnection(Connection connection){
+    public boolean registerConnection(Connection connection){
         if(!this.connections.contains(connection)){
             this.connections.add(connection);
             System.out.println("CEH: Connection registered!");
+            return true;
         }
+        return false;
     }
 
     /**
@@ -125,5 +131,9 @@ public class ChatEventHandler {
         this.mainWindow.init(c);
         Thread watcher = new Thread(new Watcher(c, this));
         watcher.start();
+    }
+
+    public boolean connected(){
+        return this.isConnected;
     }
 }

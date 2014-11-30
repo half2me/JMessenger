@@ -126,7 +126,7 @@ public class ConnectionWindow {
     /**
      * Loads the recently used hostnames from recent.dat
      */
-    private void loadRecentHostnames(){
+    public boolean loadRecentHostnames(){
         try {
             FileInputStream f = new FileInputStream("recent.dat");
             ObjectInputStream in = new ObjectInputStream(f);
@@ -134,16 +134,18 @@ public class ConnectionWindow {
             in.close();
             f.close();
             System.out.println("Deserialized data...");
+            return true;
         } catch (IOException e) {
+            return false;
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            return false;
         }
     }
 
     /**
      * Saves the recently used hostnames to recent.dat
      */
-    private void saveRecentHostnames(){
+    public boolean saveRecentHostnames(){
         try
         {
             FileOutputStream f = new FileOutputStream("recent.dat");
@@ -152,9 +154,10 @@ public class ConnectionWindow {
             out.close();
             f.close();
             System.out.println("Serialized data...");
+            return true;
         }catch(IOException i)
         {
-            i.printStackTrace();
+            return false;
         }
     }
 }

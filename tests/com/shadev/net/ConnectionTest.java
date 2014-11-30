@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.rmi.server.ExportException;
 
 import static org.junit.Assert.*;
@@ -24,5 +25,10 @@ public class ConnectionTest {
     @Test (expected = IllegalArgumentException.class)
     public void testIllegalConnect() throws Exception {
         c.connect("localhost", 99999999);
+    }
+
+    @Test
+    public void testRole() throws Exception {
+        Assert.assertEquals("Client", c.getRole());
     }
 }
